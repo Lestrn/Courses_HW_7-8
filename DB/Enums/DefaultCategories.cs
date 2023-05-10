@@ -1,6 +1,11 @@
 ﻿namespace Courses_HW_7_8.DB.Enums
 {
-    public class DefaultCategories
+  public enum Categories
     {
+        Food = 0,
+        Transport,
+        MobileConnection,
+        Internet,
+        Entertainment
     }
 }
