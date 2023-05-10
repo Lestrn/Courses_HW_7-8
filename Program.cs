@@ -1,3 +1,8 @@
+using Courses_HW_7_8.DB;
+using Courses_HW_7_8.DB.Models;
+using Courses_HW_7_8.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace Courses_HW_7_8
 {
     public class Program
@@ -5,31 +10,24 @@ namespace Courses_HW_7_8
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<AccountingDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IEntityRepository<CostCategories>, EntityRepository<CostCategories>>();
+            builder.Services.AddScoped<IEntityRepository<CostFields>, EntityRepository<CostFields>>();
+            builder.Services.AddControllersWithViews();                  
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
             app.Run();
         }
     }

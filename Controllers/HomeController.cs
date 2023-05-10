@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace Courses_HW_7_8.Controllers
 {
-    public class HomeController : Controller
+    public class AccountingController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<AccountingController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public AccountingController(ILogger<AccountingController> logger)
         {
             _logger = logger;
         }
