@@ -10,7 +10,7 @@ namespace Courses_HW_7_8.DB.Models
         [Required]
         public CostCategories Category { get; set; }
         [Required]
-        public decimal CostCost { get; set; }
+        public decimal Cost { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }

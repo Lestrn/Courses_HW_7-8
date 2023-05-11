@@ -8,6 +8,7 @@
         public Task UpdateAsync(TEntity entity);
         public Task SaveChangesAsync();
         public Task<TEntity> FindByIdAsync(int id);
-        public Task<TEntity> FindByIdWithIncludesAsync(int id, string[] includeNames);    
+        public Task<TEntity> FindByIdWithIncludesAsync(int id, params string[] includeNames);
+        public Task<IEnumerable<TEntity>> Where(Func<TEntity, bool> predicate);
     }
 }
