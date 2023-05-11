@@ -38,7 +38,10 @@ namespace Courses_HW_7_8.DB
         {
             return _entity.ToListAsync();
         }
-
+        public Task<IEnumerable<TEntity>> Where(Func<TEntity, bool>  predicate)
+        { 
+            return Task.FromResult(_entity.Where(predicate));
+        }
         public Task SaveChangesAsync()
         {
             return _context.SaveChangesAsync();
@@ -49,7 +52,7 @@ namespace Courses_HW_7_8.DB
             _entity.Update(entity);
             return Task.CompletedTask;
         }
-        public Task<TEntity> FindByIdWithIncludesAsync(int id, string[] includeNames)
+        public Task<TEntity> FindByIdWithIncludesAsync(int id, params string[] includeNames)
         {
             if (includeNames == null)
             {
@@ -66,6 +69,10 @@ namespace Courses_HW_7_8.DB
         }
         public Task FillCostCategoriesWithDefaultValues()
         {
+            if (_context.CostCategories.Any())
+            {
+                return Task.CompletedTask;
+            }
             Array categories = Enum.GetValues(typeof(Categories));
             foreach (var category in categories)
             {

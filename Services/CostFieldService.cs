@@ -84,18 +84,31 @@ namespace Courses_HW_7_8.Services
             await _costFieldRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateCategoryInField(CostCategories category)
+        public async Task UpdateCategoryInField(CostCategories category, int costFieldid)
         {
             CostCategories costCategory = await _costCategoryRepository.FindByIdAsync(category.Id);
-            if (costCategory == null)
+            CostFields costField = await _costFieldRepository.FindByIdAsync(costFieldid);
+            if (costCategory == null || costField == null)
+            {
+                throw new ArgumentException("Cost field or category wasnt found with this id");
+            }
+            costField.Category = costCategory;
+            await _costFieldRepository.UpdateAsync(costField);
+            await _costFieldRepository.SaveChangesAsync();
+        }
+        public async Task UpdateCostField(CostFields costFields)
+        {
+            CostFields costField = await _costFieldRepository.FindByIdAsync(costFields.Id);
+            if (costField == null || costField.Category == null)
             {
                 throw new ArgumentException("Cost field wasnt found with this id");
             }
-        }
-
-        public async Task UpdateCostField(CostFields costFields)
-        {
-            
+            costField.Description =  costFields.Description;
+            costField.Cost = costFields.Cost;
+            costField.Category = costFields.Category;
+            costField.Date = costFields.Date;
+            await _costFieldRepository.UpdateAsync(costField);
+            _costFieldRepository.SaveChangesAsync();
         }
         private async Task<decimal> GeneralCostByCategoryCalculator(string category, DateTime fromDate , DateTime untilDate)
         {
