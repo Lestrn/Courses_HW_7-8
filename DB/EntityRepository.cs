@@ -38,9 +38,23 @@ namespace Courses_HW_7_8.DB
         {
             return _entity.ToListAsync();
         }
+        public Task<List<TEntity>> GetAllAsyncWithIncludes(params string[] includeNames)
+        {
+            IQueryable<TEntity> query = _entity;
+            foreach (var includeName in includeNames)
+            {
+                query = query.Include(includeName);
+            }
+            return query.ToListAsync();
+
+        }
         public Task<IEnumerable<TEntity>> Where(Func<TEntity, bool>  predicate)
         { 
             return Task.FromResult(_entity.Where(predicate));
+        }
+        public Task<bool> Any(Func<TEntity, bool> predicate)
+        {
+            return Task.FromResult(_entity.Any(predicate));
         }
         public Task SaveChangesAsync()
         {

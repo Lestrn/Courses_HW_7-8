@@ -14,6 +14,8 @@ namespace Courses_HW_7_8
             builder.Services.AddDbContext<AccountingDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IEntityRepository<CostCategories>, EntityRepository<CostCategories>>();
             builder.Services.AddScoped<IEntityRepository<CostFields>, EntityRepository<CostFields>>();
+            builder.Services.AddScoped<ICostCategoriesService, CostCategoryService>();
+            builder.Services.AddScoped<ICostFieldsService, CostFieldService>();
             builder.Services.AddControllersWithViews();                  
             var app = builder.Build();
             if (!app.Environment.IsDevelopment())

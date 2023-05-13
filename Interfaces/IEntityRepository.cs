@@ -10,5 +10,8 @@
         public Task<TEntity> FindByIdAsync(int id);
         public Task<TEntity> FindByIdWithIncludesAsync(int id, params string[] includeNames);
         public Task<IEnumerable<TEntity>> Where(Func<TEntity, bool> predicate);
+        public Task FillCostCategoriesWithDefaultValues();
+        public Task<List<TEntity>> GetAllAsyncWithIncludes(params string[] includeNames);
+        public Task<bool> Any(Func<TEntity, bool> predicate);
     }
 }

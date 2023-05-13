@@ -73,7 +73,18 @@ namespace Courses_HW_7_8.Services
             return await (GeneralTotalCostCalculator(DateTime.Parse(dateFrom.ToString()), DateTime.Parse(dateUntil.ToString())));
         }
 
-        public async Task RemoveCostField(int costFieldId)
+        public async Task<List<CostFields>> GetAllCostFields()
+        {
+            List<CostFields> costFields = await _costFieldRepository.GetAllAsyncWithIncludes("Category");
+            return costFields;
+        }
+
+        public async Task<CostFields?> GetCostFeildById(int costFieldId)
+        {
+            return await _costFieldRepository.FindByIdAsync(costFieldId);
+        }
+
+        public async Task DeleteCostField(int costFieldId)
         {
             CostFields costField = await _costFieldRepository.FindByIdAsync(costFieldId);
             if (costField == null)
