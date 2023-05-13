@@ -1,10 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model HomeModel
 <div class="text-center">
-
+    <form asp-controller="Home" asp-action="CalculateMonthlyCosts">
+        <select id="category" name="categoryId" class="form-control">
+            @foreach (var item in Model.CostCategories)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <button class="btn btn-primary">Calculate monthly costs</button>
+    </form>
+    <form asp-controller="Home" asp-action="CalculateMonthlyCosts">
+        <select id="category" name="categoryId" class="form-control">
+            @foreach (var item in Model.CostCategories)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <p>From Date: </p><input type="date" name="fromDate" value="" class="form-control" />
+        <p>Until Date: </p><input type="date" name="untilDate" value="" class="form-control" />
+        <button class="btn btn-primary">Calculate in custom date</button>
+    </form>
+    <h1>Total costs: @Model.Result</h1>
 </div>
+
 @{
 
 }

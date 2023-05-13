@@ -81,19 +81,5 @@ namespace Courses_HW_7_8.DB
 
             return query.FirstOrDefaultAsync(entity => entity.Id == id);
         }
-        public Task FillCostCategoriesWithDefaultValues()
-        {
-            if (_context.CostCategories.Any())
-            {
-                return Task.CompletedTask;
-            }
-            Array categories = Enum.GetValues(typeof(Categories));
-            foreach (var category in categories)
-            {
-                _context.CostCategories.Add(new CostCategories() { Name = category.ToString() });
-            }
-             _context.SaveChanges();
-            return Task.CompletedTask;
-        }
     }
 }

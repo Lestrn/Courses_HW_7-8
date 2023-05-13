@@ -8,10 +8,10 @@ namespace Courses_HW_7_8.Interfaces
         public Task UpdateCategoryInField(CostCategories category, int costFieldid);
         public Task<decimal> CalculateCostByCategory(Categories category, TimePeriod period);
         public Task<decimal> CalculateCostByCategory(int categoryId, TimePeriod period);
-        public Task<decimal> CalculateCostByCategory(Categories category, DateOnly dateFrom, DateOnly dateUntil);
-        public Task<decimal> CalculateCostByCategory(int categoryId, DateOnly dateFrom, DateOnly dateUntil);
+        public Task<decimal> CalculateCostByCategory(Categories category, string dateFrom, string dateUntil);
+        public Task<decimal> CalculateCostByCategory(int categoryId, string dateFrom, string dateUntil);
         public Task<decimal> CalculateTotalCost(TimePeriod period);
-        public Task<decimal> CalculateTotalCost(DateOnly  dateFrom, DateOnly dateUntil);
+        public Task<decimal> CalculateTotalCost(string dateFrom, string dateUntil);
         public Task UpdateCostField(CostFields costFields);
         public Task DeleteCostField(int costFieldId);
         public Task AddCostField(CostFields costField);

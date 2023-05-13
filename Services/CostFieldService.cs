@@ -1,6 +1,7 @@
 ﻿using Courses_HW_7_8.DB.Enums;
 using Courses_HW_7_8.DB.Models;
 using Courses_HW_7_8.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace Courses_HW_7_8.Services
@@ -45,7 +46,7 @@ namespace Courses_HW_7_8.Services
             return await GeneralCostByCategoryCalculator(category.Name, dateTimePeriodAgo, dateNow);      
         }
 
-        public async Task<decimal> CalculateCostByCategory(Categories category, DateOnly dateFrom, DateOnly dateUntil)
+        public async Task<decimal> CalculateCostByCategory(Categories category, string dateFrom, string dateUntil)
         {
             CostCategories categoryFromDb = await _costCategoryRepository.FindByIdAsync((int)category);
             if (categoryFromDb == null)
@@ -55,7 +56,7 @@ namespace Courses_HW_7_8.Services
             return await GeneralCostByCategoryCalculator(category.ToString(), DateTime.Parse(dateFrom.ToString()), DateTime.Parse(dateUntil.ToString()));        
         }
 
-        public async Task<decimal> CalculateCostByCategory(int categoryId, DateOnly dateFrom, DateOnly dateUntil)
+        public async Task<decimal> CalculateCostByCategory(int categoryId, string dateFrom, string dateUntil)
         {
             CostCategories category = await _costCategoryRepository.FindByIdAsync(categoryId);
             return await GeneralCostByCategoryCalculator(category.Name, DateTime.Parse(dateFrom.ToString()), DateTime.Parse(dateUntil.ToString()));           
@@ -68,7 +69,7 @@ namespace Courses_HW_7_8.Services
             return await GeneralTotalCostCalculator(dateTimePeriodAgo, dateNow);
         }
 
-        public async Task<decimal> CalculateTotalCost(DateOnly dateFrom, DateOnly dateUntil)
+        public async Task<decimal> CalculateTotalCost(string dateFrom, string dateUntil)
         {
             return await (GeneralTotalCostCalculator(DateTime.Parse(dateFrom.ToString()), DateTime.Parse(dateUntil.ToString())));
         }
@@ -121,17 +122,17 @@ namespace Courses_HW_7_8.Services
             await _costFieldRepository.UpdateAsync(costField);
             _costFieldRepository.SaveChangesAsync();
         }
-        private async Task<decimal> GeneralCostByCategoryCalculator(string category, DateTime fromDate , DateTime untilDate)
+        private  Task<decimal> GeneralCostByCategoryCalculator(string category, DateTime fromDate , DateTime untilDate)
         {
-            var costFields = await _costFieldRepository.Where(costField => costField.Category.Name == category && costField.Date <= untilDate && costField.Date >= fromDate);
+            var costFields =  _costFieldRepository.Context.CostFields.Include(cf => cf.Category).Where(costField => costField.Category.Name == category && costField.Date <= untilDate && costField.Date >= fromDate);
             decimal totalSum = costFields.Sum(costField => costField.Cost);
-            return totalSum;
+            return Task.FromResult(totalSum);
         }
-        private async Task<decimal> GeneralTotalCostCalculator(DateTime fromDate, DateTime untilDate)
+        private  Task<decimal> GeneralTotalCostCalculator(DateTime fromDate, DateTime untilDate)
         {
-            var costFields = await _costFieldRepository.Where(costField => costField.Date <= untilDate && costField.Date >= fromDate);
+            var costFields =  _costFieldRepository.Context.CostFields.Include(cf => cf.Category).Where(costField => costField.Date <= untilDate && costField.Date >= fromDate);
             decimal totalSum = costFields.Sum(costField => costField.Cost);
-            return totalSum;
+            return Task.FromResult(totalSum);
         }
     }
 }

@@ -34,10 +34,7 @@ namespace Courses_HW_7_8.Services
             await _categoryRepository.SaveChangesAsync();
         }
 
-        public async Task FillCostCategoriesWithDefaultValues()
-        {
-            await _categoryRepository.FillCostCategoriesWithDefaultValues();
-        }
+  
 
         public async Task<List<CostCategories>> GetAllCategories()
         {

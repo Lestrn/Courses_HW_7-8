@@ -10,7 +10,5 @@ namespace Courses_HW_7_8.Interfaces
         public Task UpdateCategory(CostCategories category);
         public Task<List<CostCategories>> GetAllCategories();
         public Task<CostCategories?> GetCategoryById(int categoryId);
-        public Task FillCostCategoriesWithDefaultValues();
-      
     }
 }

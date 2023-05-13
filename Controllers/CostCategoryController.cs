@@ -39,7 +39,15 @@ namespace Courses_HW_7_8.Controllers
         {
             CostCategories category = await _costCategoriesService.GetCategoryById(id);
             category.Name = name;
-            await _costCategoriesService.UpdateCategory(category);
+            try
+            {
+                await _costCategoriesService.UpdateCategory(category);
+            }
+            catch(Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("Category", "CostCategory");
         }
     }
