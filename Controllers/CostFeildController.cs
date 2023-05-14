@@ -3,6 +3,7 @@ using Courses_HW_7_8.Interfaces;
 using Courses_HW_7_8.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Text.RegularExpressions;
 
 namespace Courses_HW_7_8.Controllers
 {
@@ -21,15 +22,17 @@ namespace Courses_HW_7_8.Controllers
             var categories = await _costCategoryRepository.GetAllAsync();
             return View(new FeildModel(categories, feilds));
         }
-        public async Task<IActionResult> AddFeild(string category, decimal cost, DateTime date, string description)
+        public async Task<IActionResult> AddFeild(string category, string cost, DateTime date, string description)
         {
+            cost = Regex.Replace(cost, @"\.", ",");
+            decimal costConverted = decimal.Parse(cost);
             var costCategory = await _costCategoryRepository.Where(ctg => category == ctg.Name);
             if(costCategory == null)
             {
                 TempData["ErrorMessage"] = "Couldnt find that category";
                 return RedirectToAction("Error", "Home");
             }
-            await _costFieldsService.AddCostField(new CostFields() { Category = costCategory.First(), Cost = cost, Date = date, Description = description });
+            await _costFieldsService.AddCostField(new CostFields() { Category = costCategory.First(), Cost = costConverted, Date = date, Description = description });
             return RedirectToAction("Feild", "CostFeild");
         }
         public async Task<IActionResult> DeleteFeild(int id)
@@ -45,8 +48,10 @@ namespace Courses_HW_7_8.Controllers
             }
             return RedirectToAction("Feild", "CostFeild");
         }
-        public async Task<IActionResult> EditFeild(int id, string date, string description,  string category, decimal cost)
+        public async Task<IActionResult> EditFeild(int id, string date, string description,  string category, string cost)
         {
+            cost = Regex.Replace(cost, @"\.", ",");
+            decimal costConverted = decimal.Parse(cost);
             var costCategory = await _costCategoryRepository.Where(ctg => category == ctg.Name);
             if (costCategory == null)
             {
@@ -57,7 +62,7 @@ namespace Courses_HW_7_8.Controllers
             feild.Date = parsedDateTime;
             feild.Description = description;
             feild.Category = costCategory.First();
-            feild.Cost = cost;
+            feild.Cost = costConverted;
             try
             {
                 await _costFieldsService.UpdateCostField(feild);

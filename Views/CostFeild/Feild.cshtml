@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <label for="cost">Cost:</label>
-        <input id="cost" name="cost" required="required" type="number" class="form-control" />
+        <input id="cost" name="cost" required="required" type="number" step="0.01" class="form-control" />
     </div>
     <div class="form-group">
         <label for="description">Description:</label>
@@ -59,7 +59,7 @@
                                 }
                         </select>
                     </th>
-                    <th scope="col"><p>@Model.CostFields[i].Description</p><input required="required" name="description" value="" /></th>
+                    <th scope="col"><p>@Model.CostFields[i].Description</p><input name="description" value="" /></th>
                     <th scope="col"><button type="submit">Edit</button></th>
                     </form>
                     <form form method="post" asp-controller="CostFeild" asp-action="DeleteFeild">
