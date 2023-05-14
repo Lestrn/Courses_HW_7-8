@@ -28,8 +28,8 @@
                     <td>
                         <form method="post" asp-controller="CostCategory" asp-action="EditCategory">
                             <input name="id" , value="@Model[i].Id" type="hidden" />
-                            <input name="name" , value="@Model[i].Name" />
-                            <button type="submit" onclick="ShowNotification('Success')">Edit</button>
+                            <input name="name" required="required" value="@Model[i].Name" />
+                            <button type="submit" onclick="ShowNotification('Request Sent!')">Edit</button>
                         </form>
                     </td>
                     <td>

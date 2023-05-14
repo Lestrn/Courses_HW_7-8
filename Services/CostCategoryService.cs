@@ -57,6 +57,11 @@ namespace Courses_HW_7_8.Services
             {
                 throw new ArgumentException("Category with this id wasnt found");
             }
+            var categoryWithTheSameName = _categoryRepository.Context.CostCategories.Any(ctg => ctg.Name == category.Name);    
+            if (categoryWithTheSameName)
+            {
+                throw new ArgumentException("Cant edit category with already an existing name");
+            }
             await _categoryRepository.UpdateAsync(category);
             await _categoryRepository.SaveChangesAsync();
         }
