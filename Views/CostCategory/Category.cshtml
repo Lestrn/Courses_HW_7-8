@@ -12,7 +12,7 @@
 <form method="post" asp-controller="CostCategory" asp-action="AddCategory" class="category-form">
     <div class="form-group">
         <label for="categoryName">Category name:</label>
-        <input id="categoryName" name="categoryName" required="required" class="form-control" />
+        <input id="categoryName" maxlength="100" name="categoryName" required="required" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Add!</button>
 </form>
@@ -28,7 +28,7 @@
                     <td>
                         <form method="post" asp-controller="CostCategory" asp-action="EditCategory">
                             <input name="id" , value="@Model[i].Id" type="hidden" />
-                            <input name="name" required="required" value="@Model[i].Name" />
+                            <input maxlength="100" name="name" required="required" value="@Model[i].Name" />
                             <button type="submit" onclick="ShowNotification('Request Sent!')">Edit</button>
                         </form>
                     </td>

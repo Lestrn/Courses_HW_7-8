@@ -58,6 +58,11 @@ namespace Courses_HW_7_8.Controllers
                 return RedirectToAction("Error", "Home", "Couldnt find category in db");
             }
             CostFields feild = await _costFieldsService.GetCostFeildById(id);
+            if(feild == null)
+            {
+                TempData["ErrorMessage"] = "Couldnt find feild with this id";
+                return RedirectToAction("Error", "Home");
+            }
             bool dateIsParsed = DateTime.TryParse(date, out DateTime parsedDateTime);
             feild.Date = parsedDateTime;
             feild.Description = description;

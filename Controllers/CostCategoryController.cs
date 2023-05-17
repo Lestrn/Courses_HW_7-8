@@ -46,6 +46,11 @@ namespace Courses_HW_7_8.Controllers
         public async Task<IActionResult> EditCategory(int id, string name)
         {
             CostCategories category = await _costCategoriesService.GetCategoryById(id);
+            if(category == null)
+            {
+                TempData["ErrorMessage"] = "Coundt find category with this id";
+                return RedirectToAction("Error", "Home");
+            }
             category.Name = name;
             try
             {
