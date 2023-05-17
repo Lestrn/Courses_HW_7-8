@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'chi-accounting-uvarov'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD538D824BD84D9EABCEDB8EF9C6BCEB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D69D53D503EA4413B4282414386322E9 }}
           package: .
