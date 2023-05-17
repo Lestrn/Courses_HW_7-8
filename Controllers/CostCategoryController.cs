@@ -32,7 +32,15 @@ namespace Courses_HW_7_8.Controllers
         }
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            await _costCategoriesService.DeleteCategory(id);
+            try
+            {
+                await _costCategoriesService.DeleteCategory(id);
+            }
+            catch(Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("Category", "CostCategory");
         }
         public async Task<IActionResult> EditCategory(int id, string name)
