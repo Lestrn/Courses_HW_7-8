@@ -1,0 +1,57 @@
+﻿@using Courses_HW_7_8.DB.Models;
+
+@model List<CostCategories>
+@{
+    ViewData["Title"] = "Cost category page";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/Courses_HW_7_8.styles.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<form method="post" asp-controller="CostCategory" asp-action="AddCategory" class="category-form">
+    <div class="form-group">
+        <label for="categoryName">Category name:</label>
+        <input id="categoryName" maxlength="100" name="categoryName" required="required" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add!</button>
+</form>
+
+@{
+    <table class="table table-light">
+        <thead>Known Categories</thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <form method="post" asp-controller="CostCategory" asp-action="EditCategory">
+                            <input name="id" , value="@Model[i].Id" type="hidden" />
+                            <input maxlength="100" name="name" required="required" value="@Model[i].Name" />
+                            <button type="submit" onclick="ShowNotification('Request Sent!')">Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-controller="CostCategory" asp-action="DeleteCategory">
+                            <input type="hidden" name="id" value="@Model[i].Id" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<script>
+    function ShowNotification(msg) {
+        alert(msg)
+    }
+</script>
+
+
+
+
+
+
